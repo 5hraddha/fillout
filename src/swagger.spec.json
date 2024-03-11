@@ -1,0 +1,125 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Fillout Form Submissions Filters API",
+    "description": "API for fetching responses from a Fillout form, but with filters.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "filterResponses",
+      "description": "Fetch form submission responses from Fillout.com's API and apply filters based on query parameters."
+    }
+  ],
+  "paths": {
+    "/{formId}/filteredResponses": {
+      "get": {
+        "summary": "Filter form submission responses by form ID and optional filters.",
+        "tags": ["filterResponses"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "formId",
+            "required": true,
+            "description": "ID of the form to fetch responses for.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filters",
+            "required": false,
+            "description": "JSON string containing filter criteria.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "description": "Number of records to skip.",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Maximum number of records to return.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 150
+            }
+          },
+          {
+            "in": "query",
+            "name": "afterDate",
+            "required": false,
+            "description": "A date string to filter submissions submitted after this date.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "beforeDate",
+            "required": false,
+            "description": "A date string to filter submissions submitted before this date.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "description": "Pass `in_progress` to get a list of in-progress (unfinished) submissions. By default, only `finished` submissions are returned.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "includeEditLink",
+            "required": false,
+            "description": "Pass `true` to include a link to edit the submission as `editLink`",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "description": "Can be `asc` or `desc`, defaults to `asc",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with filtered form submission responses."
+          },
+          "400": {
+            "description": "Bad request error."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    }
+  }
+}
